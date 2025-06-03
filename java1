@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentGradeTracker {
+
+    static class Student {
+        String name;
+        double grade;
+
+        Student(String name, double grade) {
+            this.name = name;
+            this.grade = grade;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Student> studentList = new ArrayList<>();
+
+        System.out.println("===== Student Grade Tracker =====");
+        System.out.print("Enter the number of students: ");
+        int count = scanner.nextInt();
+        scanner.nextLine(); 
+        for (int i = 0; i < count; i++) {
+            System.out.println("\nEnter details for Student " + (i + 1) + ":");
+            System.out.print("Name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Grade: ");
+            double grade = scanner.nextDouble();
+            scanner.nextLine(); 
+
+            studentList.add(new Student(name, grade));
+        }
+
+        double total = 0;
+        double highest = Double.NEGATIVE_INFINITY;
+        double lowest = Double.POSITIVE_INFINITY;
+        String topStudent = "";
+        String lowStudent = "";
+
+        
+        for (Student student : studentList) {
+            total += student.grade;
+
+            if (student.grade > highest) {
+                highest = student.grade;
+                topStudent = student.name;
+            }
+
+            if (student.grade < lowest) {
+                lowest = student.grade;
+                lowStudent = student.name;
+            }
+        }
+
+        double average = total / count;
+
+        // Display summary report
+        System.out.println("\n===== Summary Report =====");
+        System.out.printf("Average Grade: %.2f\n", average);
+        System.out.printf("Highest Grade: %.2f (by %s)\n", highest, topStudent);
+        System.out.printf("Lowest Grade: %.2f (by %s)\n", lowest, lowStudent);
+
+        System.out.println("\n-- List of All Students --");
+        for (Student student : studentList) {
+            System.out.printf("Name: %-10s Grade: %.2f\n", student.name, student.grade);
+        }
+
+        scanner.close();
+    }
+}
